@@ -1,24 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
-
+import {useState} from 'react'
+import NewAnecdote from './components/NewAnecdote';
+import Home from './components/Home';
+import About from './components/About';
+import Header from './components/Header';
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 function App() {
+  const [list, setList]=useState([]);
+  const AddAnecdote=(x, y)=>{
+setList([...list, {auteur:x, joke:y}])
+console.log(list)
+  }
   return (
+    <BrowserRouter>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+      <Switch>
+      <Route exact path='/'>
+      <Home jokes={list}/>
+      </Route>
+      <Route path='/add'>
+     <NewAnecdote add={AddAnecdote}/>
+     </Route>
+     </Switch>
+     
     </div>
+    </BrowserRouter>
   );
 }
 
